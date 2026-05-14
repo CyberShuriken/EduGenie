@@ -35,7 +35,9 @@ create table if not exists public.flashcards (
 
 create index if not exists notes_user_created_idx on public.notes(user_id, created_at desc);
 create index if not exists quizzes_user_note_idx on public.quizzes(user_id, note_id, created_at desc);
+create index if not exists quizzes_note_id_idx on public.quizzes(note_id);
 create index if not exists flashcards_user_note_idx on public.flashcards(user_id, note_id, created_at desc);
+create index if not exists flashcards_note_id_idx on public.flashcards(note_id);
 
 alter table public.profiles enable row level security;
 alter table public.notes enable row level security;
@@ -44,49 +46,49 @@ alter table public.flashcards enable row level security;
 
 create policy "profiles are owner readable"
   on public.profiles for select
-  using (auth.uid() = id);
+  using ((select auth.uid()) = id);
 
 create policy "profiles are owner writable"
   on public.profiles for insert
-  with check (auth.uid() = id);
+  with check ((select auth.uid()) = id);
 
 create policy "profiles are owner updateable"
   on public.profiles for update
-  using (auth.uid() = id)
-  with check (auth.uid() = id);
+  using ((select auth.uid()) = id)
+  with check ((select auth.uid()) = id);
 
 create policy "notes are owner readable"
   on public.notes for select
-  using (auth.uid() = user_id);
+  using ((select auth.uid()) = user_id);
 
 create policy "notes are owner writable"
   on public.notes for insert
-  with check (auth.uid() = user_id);
+  with check ((select auth.uid()) = user_id);
 
 create policy "notes are owner updateable"
   on public.notes for update
-  using (auth.uid() = user_id)
-  with check (auth.uid() = user_id);
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
 
 create policy "notes are owner deleteable"
   on public.notes for delete
-  using (auth.uid() = user_id);
+  using ((select auth.uid()) = user_id);
 
 create policy "quizzes are owner readable"
   on public.quizzes for select
-  using (auth.uid() = user_id);
+  using ((select auth.uid()) = user_id);
 
 create policy "quizzes are owner writable"
   on public.quizzes for insert
-  with check (auth.uid() = user_id);
+  with check ((select auth.uid()) = user_id);
 
 create policy "flashcards are owner readable"
   on public.flashcards for select
-  using (auth.uid() = user_id);
+  using ((select auth.uid()) = user_id);
 
 create policy "flashcards are owner writable"
   on public.flashcards for insert
-  with check (auth.uid() = user_id);
+  with check ((select auth.uid()) = user_id);
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values (
