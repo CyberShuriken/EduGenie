@@ -1,0 +1,24 @@
+import { AiGeneratePanel } from "@/components/ai-generate-panel";
+import { createClient } from "@/lib/supabase/server";
+import { requireUser } from "@/lib/study-data";
+import type { Note } from "@/types/study";
+
+export default async function SummariesPage() {
+  const user = await requireUser();
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("notes")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-3xl font-semibold">Summaries</h2>
+        <p className="mt-2 text-muted-foreground">Generate once, then reuse the saved summary.</p>
+      </div>
+      <AiGeneratePanel notes={(data ?? []) as Note[]} mode="summary" />
+    </div>
+  );
+}
