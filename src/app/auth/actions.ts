@@ -23,7 +23,7 @@ export async function signup(formData: FormData) {
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
   const supabase = await createClient();
-  const origin = (await headers()).get("origin");
+  const origin = (await headers()).get("origin") || appUrl;
 
   const { data, error } = await supabase.auth.signUp({
     email,
