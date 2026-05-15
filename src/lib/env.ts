@@ -4,11 +4,17 @@ export const appUrl =
   "http://localhost:3000";
 
 export function getSupabaseEnv() {
+  const url = (process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co").trim();
+  const anonKey = (process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || 
+                 process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 
+                 "placeholder-anon-key").trim();
+  
   return {
-    url: process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co",
-    anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key",
+    url,
+    anonKey,
     configured: Boolean(
-      process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      process.env.NEXT_PUBLIC_SUPABASE_URL && 
+      (process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
     ),
   };
 }
