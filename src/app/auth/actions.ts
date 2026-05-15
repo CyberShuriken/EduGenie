@@ -2,7 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
+import { appUrl } from "@/lib/env";
 
 export async function login(formData: FormData) {
   const email = String(formData.get("email") ?? "");
@@ -21,11 +23,15 @@ export async function signup(formData: FormData) {
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
   const supabase = await createClient();
+  const origin = (await headers()).get("origin");
 
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: { data: { name } },
+    options: { 
+      data: { name },
+      emailRedirectTo: `${origin}/auth/callback`,
+    },
   });
 
   if (error) redirect(`/signup?error=${encodeURIComponent(error.message)}`);

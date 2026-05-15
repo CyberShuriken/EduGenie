@@ -4,9 +4,9 @@ import { appUrl } from "@/lib/env";
 import { requireOpenRouterKey } from "@/lib/server-env";
 
 export const FREE_MODELS = [
-  "deepseek/deepseek-chat-v3-0324:free",
+  "deepseek/deepseek-chat:free",
   "meta-llama/llama-3.3-70b-instruct:free",
-  "google/gemma-3-27b-it:free",
+  "google/gemma-2-9b-it:free",
   "mistralai/mistral-7b-instruct:free",
 ] as const;
 
@@ -63,6 +63,8 @@ export async function callFreeModel(messages: ChatMessage[], maxTokens = 700): P
     });
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`OpenRouter error (${model}): ${response.status} - ${errorText}`);
       lastError = openRouterErrorMessage(response.status);
       if ([401, 403].includes(response.status)) break;
       continue;
