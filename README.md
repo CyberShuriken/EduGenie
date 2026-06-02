@@ -2,7 +2,9 @@
 
 EduGenie AI is a free-tier friendly academic assistant for students. It helps upload notes/PDFs, generate concise summaries, create small quizzes, build flashcards, and chat with note content through server-side OpenRouter API routes.
 
-> Tagline: AI-powered academic assistant for smarter studying.
+> Tagline: AI-powered academic assistant for smarter studying.  
+> **Live Demo**: [https://edugenie-blush.vercel.app](https://edugenie-blush.vercel.app)
+
 
 ## Screenshots
 

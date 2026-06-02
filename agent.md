@@ -2,6 +2,9 @@
 
 EduGenie AI is a free-tier optimized academic assistant designed for students. It allows users to upload notes (via text input or PDF/TXT file upload), generate concise study summaries, practice quizzes, and flashcards, and chat directly with their notes.
 
+**Live Link**: [https://edugenie-blush.vercel.app](https://edugenie-blush.vercel.app)
+
+
 This file serves as a comprehensive system manual for AI agents and human developers to understand the design, architecture, schemas, and coding guidelines of the EduGenie AI codebase.
 
 ---
@@ -46,6 +49,9 @@ graph TD
 ## 🗄️ Database & Storage Schema
 
 The Postgres database structure is defined in [0001_initial_schema.sql](file:///supabase/migrations/0001_initial_schema.sql). All tables enforce Row-Level Security (RLS) to restrict operations to the owning user.
+
+- **Supabase Project Reference**: `https://ntpmwubyzcigmrunlwci.supabase.co`
+
 
 ### Profiles Table
 Stores basic user details populated during signup.
